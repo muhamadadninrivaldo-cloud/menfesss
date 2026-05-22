@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Kirim Menfess</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#020617;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    padding:20px;
+}
+
+.card{
+
+    background:#111827;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 0 30px rgba(0,0,0,0.5);
+
+}
+
+h1{
+
+    color:white;
+
+    font-size:50px;
+
+    margin-bottom:10px;
+
+}
+
+p{
+
+    color:#cbd5e1;
+
+    margin-bottom:25px;
+
+    font-size:20px;
+
+}
+
+input,
+textarea{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    margin-bottom:15px;
+
+    background:#1e293b;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+textarea{
+
+    height:140px;
+
+    resize:none;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:10px;
+
+}
+
+.send-btn{
+
+    background:linear-gradient(
+        90deg,
+        #0ea5e9,
+        #8b5cf6
+    );
+
+    color:white;
+
+}
+
+.back-btn{
+
+    background:#ef4444;
+
+    color:white;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Kirim Pesan 
+        </h1>
+
+        <p>
+            Kirim pesan anonim sekarang
+        </p>
+
+
+
+        <input
+            type="text"
+            id="tujuan"
+            placeholder="Username tujuan"
+        >
+
+
+
+        <input
+            type="text"
+            id="nama"
+            placeholder="Nama anonim"
+        >
+
+
+
+        <textarea
+            id="pesan"
+            placeholder="Tulis pesan..."
+        ></textarea>
+
+
+
+        <button
+            class="send-btn"
+            onclick="kirim()"
+        >
+
+            Kirim Menfess
+
+        </button>
+
+
+
+        <button
+            class="back-btn"
+            onclick="backPage()"
+        >
+
+            ← Back
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+const API =
+"http://localhost/menfess";
+
+
+
+// =====================
+// KIRIM PESAN
+// =====================
+
+async function kirim(){
+
+    const tujuan =
+    document.getElementById(
+        "tujuan"
+    ).value;
+
+    const nama =
+    document.getElementById(
+        "nama"
+    ).value;
+
+    const pesan =
+    document.getElementById(
+        "pesan"
+    ).value;
+
+
+
+    if(
+        !tujuan ||
+        !nama ||
+        !pesan
+    ){
+
+        alert(
+            "Isi semua form"
+        );
+
+        return;
+
+    }
+
+
+
+    try{
+
+        const response =
+        await fetch(
+
+            `${API}/send.php`,
+
+            {
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    tujuan,
+                    nama,
+                    pesan
+
+                })
+
+            }
+
+        );
+
+
+
+        const result =
+        await response.json();
+
+
+
+        if(result.success){
+
+            alert(
+                "Pesan anonim berhasil dikirim "
+            );
+
+
+
+            document.getElementById(
+                "tujuan"
+            ).value = "";
+
+            document.getElementById(
+                "nama"
+            ).value = "";
+
+            document.getElementById(
+                "pesan"
+            ).value = "";
+
+
+
+        }else{
+
+            alert(
+                result.message
+            );
+
+        }
+
+    }catch(error){
+
+        console.log(error);
+
+        alert(
+            "Server error"
+        );
+
+    }
+
+}
+
+
+
+// =====================
+// BACK
+// =====================
+
+function backPage(){
+
+    window.location =
+    "dashboard.html";
+
+}
+
+</script>
+
+</body>
+</html>

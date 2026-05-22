@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Menfess Premium</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+
+    background:#020617;
+
+    min-height:100vh;
+
+    overflow:hidden;
+
+    display:flex;
+
+    color:white;
+
+}
+
+
+
+/* SIDEBAR */
+
+.sidebar{
+
+    width:280px;
+
+    height:100vh;
+
+    background:#050816;
+
+    border-right:1px solid rgba(255,255,255,0.1);
+
+    padding:30px;
+
+    position:fixed;
+
+}
+
+.logo{
+
+    font-size:40px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+    background:linear-gradient(
+        90deg,
+        #8b5cf6,
+        #ec4899
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+.desc{
+
+    color:#94a3b8;
+
+    margin-bottom:50px;
+
+}
+
+.menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.menu a{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    transition:0.3s;
+
+    font-size:18px;
+
+}
+
+.menu a:hover{
+
+    background:#111827;
+
+    box-shadow:
+    0 0 20px rgba(139,92,246,0.5);
+
+}
+
+
+
+/* CONTENT */
+
+.content{
+
+    margin-left:280px;
+
+    width:100%;
+
+    padding:40px;
+
+    overflow-y:auto;
+
+    height:100vh;
+
+}
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
+
+}
+
+.header h1{
+
+    font-size:70px;
+
+    font-weight:bold;
+
+}
+
+.username{
+
+    color:#a855f7;
+
+    font-size:30px;
+
+    margin-top:10px;
+
+}
+
+
+
+/* LINK */
+
+.link-box{
+
+    background:#0f172a;
+
+    border:1px solid rgba(168,85,247,0.3);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    display:inline-flex;
+
+    gap:15px;
+
+    align-items:center;
+
+    margin-bottom:40px;
+
+    cursor:pointer;
+
+}
+
+.link-box a{
+
+    color:#c084fc;
+
+    text-decoration:none;
+
+    font-size:22px;
+
+}
+
+
+
+/* MESSAGE */
+
+.messages{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+}
+
+.msg{
+
+    background:#0b1120;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:30px;
+
+    border-radius:30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    transition:0.3s;
+
+}
+
+.msg:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 0 30px rgba(139,92,246,0.3);
+
+}
+
+.msg-left{
+
+    display:flex;
+
+    gap:25px;
+
+    align-items:center;
+
+}
+
+.icon{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:#111827;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:35px;
+
+    color:#a855f7;
+
+    border:2px solid #8b5cf6;
+
+}
+
+.msg h3{
+
+    font-size:40px;
+
+    margin-bottom:10px;
+
+}
+
+.msg p{
+
+    color:#cbd5e1;
+
+    font-size:24px;
+
+}
+
+
+
+/* LOGOUT */
+
+.logout{
+
+    margin-top:50px;
+
+    width:100%;
+
+    padding:20px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        90deg,
+        #8b5cf6,
+        #06b6d4
+    );
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+/* NEW MESSAGE GLOW */
+
+.new-msg{
+
+    animation:glow 1s infinite alternate;
+
+}
+
+@keyframes glow{
+
+    from{
+
+        box-shadow:
+        0 0 10px #8b5cf6;
+
+    }
+
+    to{
+
+        box-shadow:
+        0 0 30px #ec4899;
+
+    }
+
+}
+
+</style>
+
+</head>
+<body>
+
+
+
+<!-- AUDIO -->
+
+<audio
+    id="notifSound"
+    src="notif.mp3"
+></audio>
+
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+         MENFESS
+
+    </div>
+
+    <div class="desc">
+
+        Kirim pesan
+
+    </div>
+
+
+
+    <div class="menu">
+
+        <a href="#">
+            <i class="fa fa-inbox"></i>
+            Inbox
+        </a>
+
+        <a href="send.html">
+            <i class="fa fa-paper-plane"></i>
+            Kirim Pesan
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- CONTENT -->
+
+<div class="content">
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                Inbox  
+            </h1>
+
+            <div
+                class="username"
+                id="username"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="link-box">
+
+        <i class="fa fa-link"></i>
+
+        <a href="send.html">
+
+            Link Menfess Saya
+
+        </a>
+
+    </div>
+
+
+
+    <div
+        class="messages"
+        id="messages"
+    ></div>
+
+
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+
+        Logout
+
+    </button>
+
+</div>
+
+
+
+<script>
+
+const API =
+"http://localhost/menfess";
+
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+
+
+// =====================
+// CHECK LOGIN
+// =====================
+
+if(!user){
+
+    window.location =
+    "index.html";
+
+}
+
+
+
+// =====================
+// USERNAME
+// =====================
+
+document.getElementById(
+    "username"
+).innerHTML = `
+
+@${user.username}
+
+`;
+
+
+
+// =====================
+// AUDIO
+// =====================
+
+const notifSound =
+document.getElementById(
+    "notifSound"
+);
+
+
+
+// =====================
+// REQUEST NOTIFICATION
+// =====================
+
+async function requestNotif(){
+
+    if(
+        Notification.permission
+        !== "granted"
+    ){
+
+        await Notification
+        .requestPermission();
+
+    }
+
+}
+
+requestNotif();
+
+
+
+// =====================
+// LAST COUNT
+// =====================
+
+let lastCount = 0;
+
+
+
+// =====================
+// LOAD MESSAGE
+// =====================
+
+async function loadMessages(){
+
+    try{
+
+        const response =
+        await fetch(
+
+            `${API}/messages.php?user_id=${user.id}`
+
+        );
+
+        const data =
+        await response.json();
+
+        const messages =
+        document.getElementById(
+            "messages"
+        );
+
+        messages.innerHTML = "";
+
+
+
+        data.forEach((item,index) => {
+
+            messages.innerHTML += `
+
+            <div class="msg
+            ${index == 0 ? 'new-msg' : ''}
+            ">
+
+                <div class="msg-left">
+
+                    <div class="icon">
+
+                        <i class="fa fa-envelope"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+
+                            ${item.nama}
+
+                        </h3>
+
+                        <p>
+
+                            ${item.pesan}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+
+
+
+        // =====================
+        // NEW NOTIFICATION
+        // =====================
+
+        if(data.length > lastCount){
+
+            if(lastCount != 0){
+
+                // PLAY SOUND
+
+                notifSound.play();
+
+
+
+
+                // POPUP NOTIFICATION
+
+                if(
+                    Notification.permission
+                    === "granted"
+                ){
+
+                    new Notification(
+
+                        "Menfess Baru ",
+
+                        {
+
+                            body:
+                            "Ada pesan anonim baru"
+
+                        }
+
+                    );
+
+                }
+
+            }
+
+            lastCount = data.length;
+
+        }
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+
+// =====================
+// AUTO REFRESH
+// =====================
+
+loadMessages();
+
+setInterval(
+
+    loadMessages,
+
+    3000
+
+);
+
+
+
+// =====================
+// LOGOUT
+// =====================
+
+function logout(){
+
+    localStorage.removeItem(
+        "user"
+    );
+
+    window.location =
+    "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
